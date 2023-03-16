@@ -3,40 +3,41 @@
 Ansible Controller - RedHat Server/Centos
 Ansible Managed - Ubuntu
 -------------------------------------------
-*Login to Ubuntu Server
-- Make Modification in Managed Ubuntu Server
+*Login to Ubuntu Server - Make Modification in Managed Ubuntu Server
 
-echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
-sudo su
+* echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
+* sudo su
 
-- Change the ubuntu password
+*Change the ubuntu password
 passwd ubuntu
 
-- Change sshd_config file - Change two paramters
+*Change sshd_config file - Change two paramters
 
-vi /etc/ssh/sshd_config
+* vi /etc/ssh/sshd_config
 
 PubkeyAuthentication yes
 PasswordAuthentication yes
+
 ------------------------------------------------------
-* Login to Red Hat
-======================================================
-- Install Ansible
+*Login to Red Hat
+------------------------------------------------------
+*Install Ansible
 
-sudo dnf install -y ansible-core
+* sudo dnf install -y ansible-core
 
-dnf list ansible-core
+* dnf list ansible-core
 
-dnf info ansible-core
+* dnf info ansible-core
 
-ansible --version
+* ansible --version
 
-ssh-keygen
-ssh-copy-id ubuntu@43.205.237.80
+* ssh-keygen
 
-mkdir automation
+* ssh-copy-id ubuntu@43.205.237.80
 
-vim ansible.cfg
+* mkdir automation
+
+* vim ansible.cfg
 
 [defaults]
 inventory = ./inventory
@@ -50,13 +51,16 @@ become_method=sudo
 become_user=root
 become_ask_pass=False
 
-====================
-vim inventory
+----------------------
+*Create Inventory file
+
+* vim inventory
 
 [ubuntu]
 43.205.237.80
 
-====================
-- Check if ping is working
+*Everything is set!
+
+* Use ping module and Check if ping is working
 
 ansible all -m ping
