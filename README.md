@@ -38,11 +38,14 @@ PasswordAuthentication yes
 
 * mkdir automation
 
+----------------------------------
+* Create ansible configuration file
+------------------------------------
 * vim ansible.cfg
--------------------
+
 [defaults]
-- inventory = ./inventory
-- host_key_checking = false
+inventory = ./inventory \
+host_key_checking = false \
 - remote_user = ubuntu
 - ask_pass = false
 
@@ -52,6 +55,7 @@ PasswordAuthentication yes
 - become_user=root
 - become_ask_pass=False
 
+-----------------------
 * Create Inventory file
 ------------------------
 * vim inventory
