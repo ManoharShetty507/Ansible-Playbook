@@ -22,6 +22,7 @@ passwd ubuntu
 * vi /etc/ssh/sshd_config
 
 PubkeyAuthentication yes
+
 PasswordAuthentication yes
 
 
