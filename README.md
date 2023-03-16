@@ -6,8 +6,8 @@ Ansible Managed - Ubuntu
 * Login to Ubuntu Server
 - Make Modification in Managed Ubuntu Server
 
-echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
-sudo su
+# echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
+# sudo su
 
 - Change the ubuntu password
 passwd ubuntu
