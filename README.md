@@ -39,21 +39,21 @@ PasswordAuthentication yes
 * mkdir automation
 
 * vim ansible.cfg
-
+-------------------
 [defaults]
-inventory = ./inventory
-host_key_checking = false
-remote_user = ubuntu
-ask_pass = false
+- inventory = ./inventory
+- host_key_checking = false
+- remote_user = ubuntu
+- ask_pass = false
 
 [privilege_escaltion]
-become=true
-become_method=sudo
-become_user=root
-become_ask_pass=False
+- become=true
+- become_method=sudo
+- become_user=root
+- become_ask_pass=False
 
-*Create Inventory file
-
+* Create Inventory file
+------------------------
 * vim inventory
 
 [ubuntu]
