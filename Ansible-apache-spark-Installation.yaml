@@ -1,0 +1,86 @@
+- name: Installing Spark on Ubuntu
+  hosts: ubuntu
+  vars:
+    - installation_dir : /opt/spark
+  tasks:
+    - name: Install JRE after apt update
+      become: yes
+      apt:
+        name:
+          - default-jre
+        state: present
+        update_cache: yes
+
+    - name: Create a group
+      become: yes
+      group:
+        name: spark
+        state: present
+
+    - name: Create an user
+      become: yes
+      user:
+        name: spark
+        state: present
+        group: spark
+
+    - name: Create an user
+      become: yes
+      shell:
+        cmd: echo "spark ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
+
+    - name: Create a Directory /opt/spark
+      become: yes
+      file:
+        path: "{{installation_dir}}"
+        state: directory
+        mode: 0755
+        owner: spark
+        group: spark
+
+    - name: Install Scala after apt update
+      become: yes
+      apt:
+        name:
+          - scala
+        state: present
+        update_cache: yes        
+
+    - name: Check Scala Version
+      become: yes
+      shell:
+        cmd: scala -version         
+
+    - name: Download Spark and Unzip
+      become: yes
+      unarchive:
+        src: https://downloads.apache.org/spark/spark-3.2.3/spark-3.2.3-bin-hadoop3.2.tgz
+        dest: "{{installation_dir}}"
+        mode: 0755
+        remote_src: yes        
+
+    - name: Move all the files to parent Directory
+      become: yes
+      shell:
+        cmd: cp -r {{installation_dir}}/spark-*/* {{installation_dir}}/.
+
+    - name: Put path in file
+      lineinfile:
+        dest: /root/file-path.txt
+        create: yes
+        line: "Path is {{ lookup('env', 'PATH') }}"
+        state: present
+
+    - name: Refresh Sources Profile
+      become: yes
+      shell: '/bin/bash -i -c "source ~/.profile"'
+      
+    - name: Start Services - Master
+      become: yes
+      shell: 
+        cmd: sh -c /opt/spark/sbin/start-master.sh
+
+    - name: Start Services - Worker
+      become: yes
+      shell: 
+        cmd: sh /opt/spark/sbin/start-slave.sh spark://localhost:7077

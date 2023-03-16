@@ -1,0 +1,57 @@
+#Install LAMP Stack On Ubuntu Server
+- hosts: ubuntu
+  tasks:
+  - name: install lamp stack
+    become: yes
+    apt:
+      pkg:
+        - apache2
+        - mysql-server
+        - php
+        - php-mysql
+      state: present
+      update_cache: yes
+
+  - name: Add Hostname
+    become: yes
+    become_user: ubuntu
+    ansible.builtin.shell:
+      cmd: echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/servername.conf
+
+  - name: Get service on port 80
+    shell: netstat -tunlp | grep ":80 " | sed -e 's/.*\///'
+    register: results
+
+  - name: See what netstat returned
+    debug: var=results
+
+  - name: Get Apache PIDs
+    shell:
+      cmd: ps -ef | grep -v grep | grep -w apache2 | awk '{print $2}' | awk 'FNR == 1 {print}'
+      warn: false
+    changed_when: false
+    check_mode: false
+    register: apache_pids
+
+  - name: Kill running processes
+    shell: "kill {{ item }}"
+    with_items:
+    - "{{ apache_pids.stdout_lines }}"
+
+  - name: Show PIDs
+    debug:
+      var: apache_pids
+
+  - name: start apache service
+    become: yes
+    service:
+      name: apache2.service
+      state: started
+      enabled: yes
+
+  - name: start mysql service
+    become: yes
+    service:
+      name: mysql
+      state: started
+      enabled: yes
