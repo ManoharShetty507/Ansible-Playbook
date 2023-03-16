@@ -1,7 +1,12 @@
-# Ansible-Configure - Controller Node & Managed Node
+Ansible-Configure - Controller Node & Managed Node
+--------------------------------------------
 
-- Ansible Controller - RedHat Server/Centos
-- Ansible Managed - Ubuntu
+------------------
+-> Configured Node:
+
+
+Ansible Controller - RedHat Server/Centos
+Ansible Managed - Ubuntu
 
 *Login to Ubuntu Server - Make Modification in Managed Ubuntu Server
 ---------------------------------------------------------------------
@@ -38,32 +43,44 @@ PasswordAuthentication yes
 
 * mkdir automation
 
-----------------------------------
-* Create ansible configuration file
-------------------------------------
+-----------------------------------
+-> Create ansible configuration file
+--------------------------------------
 * vim ansible.cfg
 
 [defaults]
-inventory = ./inventory \
-host_key_checking = false \
-- remote_user = ubuntu
-- ask_pass = false
 
+inventory = ./inventory 
+
+host_key_checking = false
+
+remote_user = ubuntu
+
+ask_pass = false
+
+----------
 [privilege_escaltion]
-- become=true
-- become_method=sudo
-- become_user=root
-- become_ask_pass=False
+
+become=true
+
+become_method=sudo
+
+become_user=root
+
+become_ask_pass=False
 
 -----------------------
-* Create Inventory file
+-> Create Inventory file
 ------------------------
 * vim inventory
 
 [ubuntu]
+
 43.205.237.80
 
-*Everything is set!
+---------------------------
+-> Everything is set!
+---------------------------
 
 * Use ping module and Check if ping is working
 
