@@ -1,9 +1,10 @@
 # Ansible-Configure - Controller Node & Managed Node
 
-Ansible Controller - RedHat Server/Centos
-Ansible Managed - Ubuntu
--------------------------------------------
+- Ansible Controller - RedHat Server/Centos
+- Ansible Managed - Ubuntu
+
 *Login to Ubuntu Server - Make Modification in Managed Ubuntu Server
+---------------------------------------------------------------------
 
 * echo "ubuntu ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ubuntu
 * sudo su
@@ -18,7 +19,7 @@ passwd ubuntu
 PubkeyAuthentication yes
 PasswordAuthentication yes
 
-------------------------------------------------------
+
 *Login to Red Hat
 ------------------------------------------------------
 *Install Ansible
@@ -51,7 +52,6 @@ become_method=sudo
 become_user=root
 become_ask_pass=False
 
-----------------------
 *Create Inventory file
 
 * vim inventory
